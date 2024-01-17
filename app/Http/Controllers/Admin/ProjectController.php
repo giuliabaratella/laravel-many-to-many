@@ -110,10 +110,10 @@ class ProjectController extends Controller
     {
         $form_data = $request->validated();
 
+        $form_data['slug'] = $project->slug;
         if ($project->title !== $form_data['title']) {
             $slug = Project::getSlug($form_data['title']);
             $form_data['slug'] = $slug;
-
         }
 
 
