@@ -30,7 +30,7 @@
                             </div>
                         </div>
                     @empty
-                        <li>No projects</li>
+                        <div>No projects</div>
                     @endforelse
                 </div>
 

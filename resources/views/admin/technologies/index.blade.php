@@ -47,7 +47,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($categories as $category)
+                                @forelse ($technologies as $technology)
                                     <tr>
                                         <th>
                                             <a href="{{ route('admin.technologies.show', $technology->slug) }}">
@@ -61,7 +61,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <form action="{{ route('admin.technologies.destroy', $category->slug) }}"
+                                            <form action="{{ route('admin.technologies.destroy', $technology->slug) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')

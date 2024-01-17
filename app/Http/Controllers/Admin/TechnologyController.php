@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 use App\Models\Technology;
 use App\Http\Requests\StoreTechnologyRequest;
@@ -13,9 +15,17 @@ class TechnologyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+
+        if (!empty($request->query('search'))) {
+            $search = $request->query('search');
+            $technologies = Technology::where('name', 'like', $search . '%')->get();
+
+        } else {
+            $technologies = Technology::all();
+        }
+        return view('admin.technologies.index', compact('technologies'));
     }
 
     /**
@@ -23,7 +33,8 @@ class TechnologyController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.technologies.create');
+
     }
 
     /**
@@ -39,7 +50,8 @@ class TechnologyController extends Controller
      */
     public function show(Technology $technology)
     {
-        //
+        return view('admin.technologies.show', compact('technology'));
+
     }
 
     /**
@@ -47,7 +59,8 @@ class TechnologyController extends Controller
      */
     public function edit(Technology $technology)
     {
-        //
+        return view('admin.technologies.edit', compact('technology'));
+
     }
 
     /**
@@ -63,6 +76,7 @@ class TechnologyController extends Controller
      */
     public function destroy(Technology $technology)
     {
-        //
+        $technology->delete();
+        return redirect()->route('admin.technologies.index')->with('message', "The technology '$technology->name' has been deleted");
     }
 }
