@@ -1,0 +1,13 @@
+import "./bootstrap";
+import "~resources/scss/app.scss";
+import * as bootstrap from "bootstrap";
+import.meta.glob(["../img/**", "../fonts/**"]);
+
+const previewImage = document.getElementById("image");
+previewImage.addEventListener("change", (event)=>{
+    const oFReader = new FileReader();
+    oFReader.readAsDataURL(previewImage.files[0]);
+    oFReader.onload = function (oFREvent) {
+        document.getElementById("uploadPreview").src = oFREvent.target.result;
+    }
+})
