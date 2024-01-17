@@ -42,7 +42,13 @@ class TechnologyController extends Controller
      */
     public function store(StoreTechnologyRequest $request)
     {
-        //
+
+        $form_data = $request->validated();
+        $slug = Technology::getSlug($form_data['name']);
+        $form_data['slug'] = $slug;
+        $newTechnology = Technology::create($form_data);
+
+        return to_route('admin.technologies.index');
     }
 
     /**
@@ -68,7 +74,14 @@ class TechnologyController extends Controller
      */
     public function update(UpdateTechnologyRequest $request, Technology $technology)
     {
-        //
+        $form_data = $request->validated();
+        $form_data['slug'] = $technology->slug;
+        if ($technology->name !== $form_data['name']) {
+            $slug = Technology::getSlug($form_data['name']);
+            $form_data['slug'] = $slug;
+        }
+        $technology->update($form_data);
+        return redirect()->route('admin.technologies.show', $technology->slug);
     }
 
     /**
