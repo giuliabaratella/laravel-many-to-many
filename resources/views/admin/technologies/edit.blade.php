@@ -19,7 +19,7 @@
                         @endif
 
                         <div class="card p-2">
-                            <form action="{{ route('admin.categories.update', $technology->slug) }}" method="POST"
+                            <form action="{{ route('admin.technologies.update', $technology->slug) }}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')

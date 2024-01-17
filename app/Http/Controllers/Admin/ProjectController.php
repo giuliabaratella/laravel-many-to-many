@@ -95,10 +95,11 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $technologies = Technology::all();
 
         $categories = Category::all();
 
-        return view('admin.projects.edit', compact('project', 'categories'));
+        return view('admin.projects.edit', compact('project', 'categories', 'technologies'));
 
     }
 
@@ -130,6 +131,12 @@ class ProjectController extends Controller
 
         $project->update($form_data);
 
+        if ($request->has('technologies')) {
+            $project->technologies()->sync($request->technologies);
+        } else {
+            $project->technologies()->sync([]);
+        }
+
         return redirect()->route('admin.projects.show', $project->slug);
     }
 
@@ -138,6 +145,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        $project->technologies()->detach();
+        // $project->technologies()->sync([]);
+
         $project->delete();
         if ($project->image) {
             Storage::delete($project->image);

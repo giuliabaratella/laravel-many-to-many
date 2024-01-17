@@ -32,7 +32,9 @@ class UpdateProjectRequest extends FormRequest
             'link' => 'required|max:255|url',
             'description' => 'nullable',
             'image' => 'nullable|image|max:1024|mimes:jpg',
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'technologies' => 'nullable|exists:technologies,id'
+
 
         ];
     }
@@ -50,7 +52,8 @@ class UpdateProjectRequest extends FormRequest
             'image.image' => 'Il file deve essere di tipo image',
             'image.max' => 'Il file deve pesare massimo 1mb',
             'image.mimes' => 'Il file deve essere di tipo jpg',
-            'category_id.exists' => 'Devi scegliere una categoria esistente'
+            'category_id.exists' => 'Devi scegliere una categoria esistente',
+            'technologies.exists' => 'Devi scegliere delle tecnologie esistenti'
 
 
 
