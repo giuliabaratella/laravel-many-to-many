@@ -20,6 +20,10 @@
                     <a class="nav-link" href="{{ route('admin.categories.index') }}">Categories</a>
 
                 </li>
+                <li>
+                    <a class="nav-link" href="{{ route('admin.technologies.index') }}">Tech</a>
+
+                </li>
             @endguest
         </ul>
 

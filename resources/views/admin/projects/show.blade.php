@@ -19,6 +19,20 @@
                 <h3><a href="{{ $project->link }}">{{ $project->link }}</a></h3>
                 <p>{{ $project->description }}</p>
 
+                <div class="d-flex">
+                    <div class="me-3">Technologies:</div>
+                    @if ($project->technologies)
+                        @forelse ($project->technologies as $technology)
+                            <span class="badge text-bg-success me-2">
+                                {{ $technology->name }}
+                            </span>
+                        @empty
+                            <div>none</div>
+                        @endforelse
+                    @endif
+
+                </div>
+
             </div>
 
         </div>

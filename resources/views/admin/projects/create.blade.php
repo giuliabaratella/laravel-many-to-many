@@ -82,10 +82,29 @@
                                                 {{ $category->name }}
                                             </option>
                                         @endforeach
-
+                                        @error('categories')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </select>
 
                                     @error('category_id')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="form-group">
+                                        <h6>Select Technologies</h6>
+                                        @foreach ($technologies as $technology)
+                                            <div class="form-check @error('technologies') is-invalid @enderror">
+                                                <input type="checkbox" class="form-check-imput" name="technologies[]"
+                                                    value="{{ $technology->id }}"
+                                                    {{ in_array($technology->id, old('technologies', [])) ? 'checked' : '' }}>
+                                                <label for="form-check-label">{{ $technology->name }}</label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    @error('technologies')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Project;
 use App\Models\Category;
+use App\Models\Technology;
 
 use Illuminate\Http\Request;
 
@@ -42,8 +43,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $technologies = Technology::all();
         $categories = Category::all();
-        return view('admin.projects.create', compact('categories'));
+        return view('admin.projects.create', compact('categories', 'technologies'));
 
     }
 
@@ -71,6 +73,10 @@ class ProjectController extends Controller
 
 
         $newProject = Project::create($form_data);
+
+        if ($request->has('technologies')) {
+            $newProject->technologies()->attach($request->technologies);
+        }
 
         return to_route('admin.projects.index');
     }

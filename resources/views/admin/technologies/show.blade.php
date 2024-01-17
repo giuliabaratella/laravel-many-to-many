@@ -3,12 +3,12 @@
     <section class="container">
         <div class="card">
             <div class="card-header">
-                <h1>All {{ $category->name }} projects</h1>
+                <h1>All {{ $technology->name }} projects</h1>
             </div>
             <div class="card-body">
 
                 <div class="row">
-                    @forelse ($category->projects as $project)
+                    @forelse ($technology->projects as $project)
                         <div class="col-12 col-md-6 col-xl-4 mb-3">
                             <div class="card h-100">
                                 @if ($project->image)
