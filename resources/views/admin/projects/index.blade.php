@@ -79,7 +79,9 @@
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger rounded-3 border-0">
+                                                <button type="submit"
+                                                    class="btn btn-danger rounded-3 border-0 cancel-button"
+                                                    data-item-title="{{ $project->title }}">
                                                     <i class="fa-solid fa-trash" style="font-size: 0.7rem"></i>
                                                 </button>
                                             </form>
@@ -136,4 +138,6 @@
 
     </div>
     </div>
+
+    @include ('partials.modal_delete')
 @endsection
