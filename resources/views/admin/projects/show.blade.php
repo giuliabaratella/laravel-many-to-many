@@ -23,9 +23,12 @@
                     <div class="me-3">Technologies:</div>
                     @if ($project->technologies)
                         @forelse ($project->technologies as $technology)
-                            <span class="badge text-bg-success me-2">
-                                {{ $technology->name }}
-                            </span>
+                            <a href="{{ route('admin.technologies.show', $technology->slug) }}" class="text-white">
+                                <span class="badge text-bg-success me-2">
+                                    {{ $technology->name }}
+                                </span>
+                            </a>
+
                         @empty
                             <div>none</div>
                         @endforelse

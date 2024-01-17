@@ -14,9 +14,9 @@
             <div class="alert alert-success">{{ session('message') }}</div>
         @endif
         <div class="row">
-            <section id="all-projects" class="col-12 col-lg-8 mb-4">
+            <section id="all-categories" class="col-12 col-lg-8 mb-4">
 
-                {{-- all projects card  --}}
+                {{-- all categories card  --}}
                 <div class="card h-100">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center py-1">
