@@ -140,10 +140,10 @@ php artisan make:migration create_nome_tabella_table
 #creo migration per modifiche
 php artisan make:migration update_users_table --table=users
 php artisan make:migration add_phone_number_to_users_table
-
-    #dentro up della migration
-            $table->string('series', 100)->chenge();
-
+#dentro up della migration inserire modifica e il metodo change
+    $table->string('image', 255)->change();
+#dentro down inserire il campo allo stadio iniziale e il metodo change
+    $table->string('image', 100)->change();
 
 #lanciare migration
 php artisan migrate
@@ -177,7 +177,7 @@ php artisan make:controller ComicController --resources
 #ceare model con relativo resource controller, migration e seeder
 php artisan make:model Comic -rcms
 #con anche request
-php artisan make:model Comic -rcms --request
+php artisan make:model Comic -rcms --requests
 
 #leggere rotte:
 php artisan route:list --except-vendor
@@ -246,6 +246,7 @@ FILESYSTEM_DISK=public
 php artisan storage:link
 
 #nelle funzioni create e edit (dove è presente il form con l'inserimento immagine)
+<form method="post" action="..." enctype="multipart/form-data">
 
 $file_path = Storage::put('uploads', $request->image);
 #oppure
@@ -259,4 +260,83 @@ $data['image'] = $file_path;
 
 #per visualizzare nelle views
 <img src="{{ asset('storage/' . $project->image) }}">
+```
+
+## Relazioni
+
+```bash
+
+#UNO A MOLTI
+
+#migration di esempio
+php artisan make:migration update_projects_table
+php artisan make:migration add_category_id_to_projects_table
+
+#up
+Schema::table('posts', function (Blueprint $table) {
+    #crea user_id in caso non sia già presente
+    $table->unsignedBigInteger('user_id');
+    #assegna a user_id la foreign key
+    $table->foreign('user_id')
+        ->references('id')
+        ->on('users')->cascadeOnDelete();
+});
+#il metodo cascadeOnDelete è facoltativo
+# elimina tutti i post di uno user alla cancellazione dello user stesso
+
+# shortcut che crea e assegna foreign key
+$table->foreignId('user_id')->constrained()->cascadeOnDelete();
+
+
+
+#down
+#togli la foreign key a user_id
+$table->dropForeign('posts_user_id_foreign');
+#cancella il campo user_id(se creato in questa migration)
+$table->dropColumn('user_id');
+
+#nei model
+
+#dalla parte dei molti (project)
+ public function user()
+{
+    return $this->belongsTo(User::class);
+}
+
+#dalla parte dell'uno (user)
+ public function projects()
+{
+    return $this->hasMany(Project::class);
+}
+
+
+#MOLTI A MOLTI
+
+#migration
+#creare una migration create_nomeA_nomeB_table
+#dove nomeA e nomeB sono in ordine alfabetico e al singolare
+
+php artisan make:migration create_project_technology_table
+
+#dentro la migration
+#up
+$table->id();
+$table->unsignedBiginteger('project_id');
+$table->foreign('project_id')->references('id')->on('projects')->cascadeOnDelete();
+
+$table->unsignedBiginteger('technology_id');
+$table->foreign('technology_id')->references('id')->on('technologies')->cascadeOnDelete();
+
+#down
+ Schema::dropIfExists('project_technology');
+
+
+#nei model
+#
+public function technologies()
+{
+    return $this->belongsToMany(Technology::class);
+}
+
+
 ```

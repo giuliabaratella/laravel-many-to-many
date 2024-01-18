@@ -82,9 +82,6 @@
                                                 {{ $category->name }}
                                             </option>
                                         @endforeach
-                                        @error('categories')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
                                     </select>
 
                                     @error('category_id')
