@@ -24,7 +24,9 @@ class Project extends Model
     }
     public function technologies()
     {
-        return $this->belongsToMany(Technology::class);
+        return $this->belongsToMany(Technology::class)->withTimestamps();
+        // return $this->belongsToMany(Technology::class)->withPivot('campo_aggiuntivo');
+
     }
     public static function getSlug($title)
     {

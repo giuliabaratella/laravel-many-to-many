@@ -23,14 +23,15 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-
-
+        // $currentUser= Auth::id();
         if (!empty($request->query('search'))) {
             $search = $request->query('search');
             $projects = Project::where('title', 'like', $search . '%')->get();
 
         } else {
-            $projects = Project::all();
+            $projects = Project::paginate(3);
+            // $projects = Project::where('user_id', $currentUser)->paginate(3);
+
 
         }
 
@@ -145,7 +146,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        $project->technologies()->detach();
+        // $project->technologies()->detach();
         // $project->technologies()->sync([]);
 
         $project->delete();

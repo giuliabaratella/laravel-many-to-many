@@ -91,8 +91,15 @@
                                     <div>No projects</div>
                                 @endforelse
                             </tbody>
+
                         </table>
+
                     </div>
+                    <div class="p-2">
+                        {{ $projects->links('vendor.pagination.bootstrap-5') }}
+
+                    </div>
+
                 </div>
             </section>
 
